@@ -19,10 +19,7 @@ import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -286,11 +283,6 @@ public class ShellTest {
     }
 
     // FIXME: Adding some required tests for testing purposes
-    @Test
-    void ARequiredTest() {
-        assertTrue(true);
-    }
-
     @Test
     void AnotherRequiredTest() {
         assertEquals(3.14, 3.14);
