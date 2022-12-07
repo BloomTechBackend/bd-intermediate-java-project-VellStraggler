@@ -1,0 +1,38 @@
+@startuml
+
+class PromiseHistoryClient{
+    + getPromiseHistoryByOrderId()
+    - PromiseHistory
+}
+class GetPromiseHistoryByOrderIDActivity{
+    + getPromiseHistoryByOrderId()
+    - PromiseHistory
+}
+class OrderDao{
+    + get()
+    - Order
+}
+class PromiseDao{
+    + getCustomerOrderByOrderId()
+    - List <Promise>
+}
+class OrderManipulationAuthorityClient{
+    + getCustomerOrderItemByOrderItemId()
+    + getCustomerOrderByOrderId()
+    - OrderResult
+    - OrderResultItem
+}
+class DeliveryPromiseServiceClient{
+    + getDeliveryPromiseByOrderItemId()
+    - Promise
+}
+
+PromiseHistoryClient -> GetPromiseHistoryByOrderIDActivity
+GetPromiseHistoryByOrderIDActivity -> OrderDao
+OrderDao -> OrderManipulationAuthorityClient
+GetPromiseHistoryByOrderIDActivity -> PromiseDao
+PromiseDao -> OrderManipulationAuthorityClient
+PromiseDao -> DeliveryPromiseServiceClient
+
+
+@enduml
