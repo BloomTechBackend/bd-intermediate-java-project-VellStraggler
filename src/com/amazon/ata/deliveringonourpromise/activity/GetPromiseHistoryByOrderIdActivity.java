@@ -6,6 +6,7 @@ import com.amazon.ata.deliveringonourpromise.types.OrderItem;
 import com.amazon.ata.deliveringonourpromise.types.Promise;
 import com.amazon.ata.deliveringonourpromise.types.PromiseHistory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,16 +36,17 @@ public class GetPromiseHistoryByOrderIdActivity {
      * @return PromiseHistory containing the order and promise history for that order
      */
     public PromiseHistory getPromiseHistoryByOrderId(String orderId) {
-        List<OrderItem> customerOrderItems = null;
-        OrderItem customerOrderItem = null;
-        if (null == orderId) {
+        if (orderId == null) {
             throw new IllegalArgumentException("order ID cannot be null");
         }
+        List<OrderItem> customerOrderItems = new ArrayList<>();
+        OrderItem orderItem = OrderItem.builder().withOrderId(orderId).build();
+        customerOrderItems.add(orderItem);
+        OrderItem customerOrderItem = null;
 
         Order order = orderDao.get(orderId);
         if (order != null) {
             customerOrderItems = order.getCustomerOrderItemList();
-            customerOrderItem = null;
             if (customerOrderItems != null && !customerOrderItems.isEmpty()) {
                 customerOrderItem = customerOrderItems.get(0);
             }
