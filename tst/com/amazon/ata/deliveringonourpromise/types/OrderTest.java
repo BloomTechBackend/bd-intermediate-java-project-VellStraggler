@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderTest {
-    private final String orderId = "900-3746401-0000002";
+    private final String orderId = "900-3746401-0000002"; //This isn't strictly necessary
 
     @Test
     public void Order_OrderDate_NotModifiable(){
