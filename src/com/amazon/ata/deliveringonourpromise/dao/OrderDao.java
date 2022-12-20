@@ -40,7 +40,6 @@ public class OrderDao implements ReadOnlyDao<String, Order> {
         if (null == omaOrder) {
             return null;
         }
-
         if (! new OrderFieldValidator().isValidOrderId(orderId)) {
             return null;
         }

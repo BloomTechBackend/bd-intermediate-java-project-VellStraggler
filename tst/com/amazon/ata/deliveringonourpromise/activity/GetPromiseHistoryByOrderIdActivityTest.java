@@ -6,13 +6,13 @@ import com.amazon.ata.deliveringonourpromise.types.Order;
 import com.amazon.ata.deliveringonourpromise.types.Promise;
 import com.amazon.ata.deliveringonourpromise.types.PromiseHistory;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -40,6 +40,17 @@ public class GetPromiseHistoryByOrderIdActivityTest {
         // WHEN + THEN
         // (participants: we'll learn what this is doing later in the course)
         assertThrows(IllegalArgumentException.class, () -> activity.getPromiseHistoryByOrderId(orderId));
+    }
+    @Test
+    public void getPromiseHistoryByOrderId_nullOrder_createsEmptyPromiseHistory() {
+        // GIVEN
+        String orderId = "111-749023-7630574";
+        List emptyList = List.of();
+        // WHEN
+        PromiseHistory history = activity.getPromiseHistoryByOrderId(orderId);
+        // THEN
+        assertEquals(emptyList,history.getPromises(),
+                    "Promises should be empty.");
     }
 
     @Test

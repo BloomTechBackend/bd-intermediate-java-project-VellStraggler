@@ -35,16 +35,19 @@ public class GetPromiseHistoryByOrderIdActivity {
      * @return PromiseHistory containing the order and promise history for that order
      */
     public PromiseHistory getPromiseHistoryByOrderId(String orderId) {
+        List<OrderItem> customerOrderItems = null;
+        OrderItem customerOrderItem = null;
         if (null == orderId) {
             throw new IllegalArgumentException("order ID cannot be null");
         }
 
         Order order = orderDao.get(orderId);
-
-        List<OrderItem> customerOrderItems = order.getCustomerOrderItemList();
-        OrderItem customerOrderItem = null;
-        if (customerOrderItems != null && !customerOrderItems.isEmpty()) {
-            customerOrderItem = customerOrderItems.get(0);
+        if (order != null) {
+            customerOrderItems = order.getCustomerOrderItemList();
+            customerOrderItem = null;
+            if (customerOrderItems != null && !customerOrderItems.isEmpty()) {
+                customerOrderItem = customerOrderItems.get(0);
+            }
         }
 
         PromiseHistory history = new PromiseHistory(order);

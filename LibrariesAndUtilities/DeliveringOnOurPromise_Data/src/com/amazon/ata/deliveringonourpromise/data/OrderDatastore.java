@@ -62,11 +62,13 @@ public final class OrderDatastore {
      * @param orderId The order ID to fetch sample data for
      * @return OrderData object with zero to many OrderItemData entries. orderIds will all be set to orderId.
      */
-    public OrderData getOrderData(String orderId) {
+    public OrderData getOrderData(String orderId) throws IllegalArgumentException{
         ensureDataPopulated();
 
         // return null if malformed
         if (null == orderId || !Pattern.matches(ORDER_FORMAT, orderId)) {
+            // FIXME: Program quits when ORDER_FORMAT is not followed
+            //throw new IllegalArgumentException();
             return null;
         }
 
