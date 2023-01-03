@@ -42,6 +42,17 @@ public class PromiseDao<T> implements ReadOnlyDao<String, List<Promise>> {
         this.dpsClient = dpsClient;
         this.omaClient = omaClient;
     }
+    /**
+     * PromiseDao constructor, accepting service clients for DPS, OFS, and OMA.
+     * @param dpsClient ServiceClient for DAO to access DPS
+     * @param ofsClient ServiceClient for DAO to access OFS
+     * @param omaClient OrderManipulationAuthorityClient for DAO to access OMA
+     */
+    public PromiseDao(DeliveryPromiseServiceClient dpsClient, OrderFulfillmentServiceClient ofsClient, OrderManipulationAuthorityClient omaClient) {
+        this.dpsClient = dpsClient;
+        this.ofsClient = ofsClient;
+        this.omaClient = omaClient;
+    }
 
     /**
      * Returns a list of all Promises associated with the given order item ID.
