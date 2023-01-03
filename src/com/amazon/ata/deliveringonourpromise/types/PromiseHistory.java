@@ -14,11 +14,13 @@ public class PromiseHistory {
     /**
      * Constructs a new promise history with the given order. A null order value is allowed here.
      * If the order is null, no promises may be added to the history.
-     *
      * @param order the order these promises correspond to
      */
     public PromiseHistory(Order order) {
         this.order = order;
+    }
+    public int size() {
+        return promises.size();
     }
 
     public Order getOrder() {
@@ -27,7 +29,6 @@ public class PromiseHistory {
 
     /**
      * Adds a Promise to the promise history.
-     *
      * @param newPromise the next promise to add to the history's promises
      */
     public void addPromise(Promise newPromise) {
@@ -39,6 +40,16 @@ public class PromiseHistory {
             throw new IllegalArgumentException("Promises cannot be added for a null order.");
         }
         promises.add(newPromise);
+    }
+    public void setPromise(int i, Promise newPromise) {
+        if (null == newPromise) {
+            throw new IllegalArgumentException("PromiseHistory cannot accept null Promises");
+        }
+
+        if (order == null) {
+            throw new IllegalArgumentException("Promises cannot be added for a null order.");
+        }
+        promises.set(i, newPromise);
     }
 
     /**

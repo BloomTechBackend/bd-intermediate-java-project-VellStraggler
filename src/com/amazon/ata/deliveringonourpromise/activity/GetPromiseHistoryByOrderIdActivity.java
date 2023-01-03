@@ -1,5 +1,6 @@
 package com.amazon.ata.deliveringonourpromise.activity;
 
+import com.amazon.ata.deliveringonourpromise.comparators.PromiseAsinComparator;
 import com.amazon.ata.deliveringonourpromise.dao.ReadOnlyDao;
 import com.amazon.ata.deliveringonourpromise.types.Order;
 import com.amazon.ata.deliveringonourpromise.types.OrderItem;
@@ -42,23 +43,41 @@ public class GetPromiseHistoryByOrderIdActivity {
         List<OrderItem> customerOrderItems = new ArrayList<>();
         OrderItem orderItem = OrderItem.builder().withOrderId(orderId).build();
         customerOrderItems.add(orderItem);
-        OrderItem customerOrderItem = null;
+        //OrderItem customerOrderItem = null; //We don't want one item; we want them all
 
         Order order = orderDao.get(orderId);
         if (order != null) {
             customerOrderItems = order.getCustomerOrderItemList();
-            if (customerOrderItems != null && !customerOrderItems.isEmpty()) {
-                customerOrderItem = customerOrderItems.get(0);
-            }
+            //if (customerOrderItems != null && !customerOrderItems.isEmpty()) {
+            //    // THIS IS WHERE THE FIRST ITEM GETS ADDED
+            //    customerOrderItem = customerOrderItems.get(0);
+            //}
         }
 
         PromiseHistory history = new PromiseHistory(order);
-        if (customerOrderItem != null) {
-            List<Promise> promises = promiseDao.get(customerOrderItem.getCustomerOrderItemId());
-            for (Promise promise : promises) {
-                promise.setConfidence(customerOrderItem.isConfidenceTracked(), customerOrderItem.getConfidence());
-                history.addPromise(promise);
+        PromiseAsinComparator pac = new PromiseAsinComparator();
+
+        for (OrderItem customerOrderItem: customerOrderItems) {
+            if (customerOrderItem != null) {
+                List<Promise> promises = promiseDao.get(customerOrderItem.getCustomerOrderItemId());
+                for (Promise promise : promises) {
+                    promise.setConfidence(customerOrderItem.isConfidenceTracked(), customerOrderItem.getConfidence());
+                    history.addPromise(promise);
+                }
             }
+        }
+        // Here, we can sort by ASIN, ascending
+        for (int i = 0; i < history.size() - 1; i++) {
+            int mIndex = i;
+            for (int j = i + 1; j < history.size(); j++) {
+                if (pac.compare(history.getPromises().get(j), history.getPromises().get(mIndex)) < 0) {
+                    mIndex = j;
+                }
+            }
+            // Swap the elements at indices i and mIndex
+            Promise tempPromise = history.getPromises().get(i);
+            history.setPromise(i, history.getPromises().get(mIndex));
+            history.setPromise(mIndex, tempPromise);
         }
 
         return history;
