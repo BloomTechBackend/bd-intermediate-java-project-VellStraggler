@@ -18,7 +18,7 @@ public class OrderFulfillmentServiceClient implements PromiseClient {
 
     /**
      * Returns a Promise Object, just like DeliveryPromiseServiceClient does, only
-     * this builds one from an OrderPromise rather than a DeliveryPromise
+     * this builds one from an OrderPromise rather than a DeliveryPromise.
      * @param customerOrderItemId a string
      * @return a Promise object
      */

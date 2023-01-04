@@ -22,7 +22,7 @@ public class PromiseHistory {
 
     /**
      * Return the size of the privately stored Promise list.
-     * @return
+     * @return length of this.promises.
      */
     public int size() {
         return promises.size();
@@ -49,8 +49,8 @@ public class PromiseHistory {
 
     /**
      * Set a Promise at index i to be a new, given Promise.
-     * @param i
-     * @param newPromise
+     * @param i index of Promise to be removed
+     * @param newPromise replacement Promise
      */
     public void setPromise(int i, Promise newPromise) {
         if (null == newPromise) {
