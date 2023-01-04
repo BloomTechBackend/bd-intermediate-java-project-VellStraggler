@@ -7,6 +7,11 @@ import com.amazon.ata.orderfulfillmentservice.OrderPromise;
 
 public class OrderFulfillmentServiceClient implements PromiseClient {
     private OrderFulfillmentService ofService;
+
+    /**
+     * Set the ofService as a private OrderFulfillmentService instance.
+     * @param ofService OrderFulfillmentService.
+     */
     public OrderFulfillmentServiceClient(OrderFulfillmentService ofService) {
         this.ofService = ofService;
     }

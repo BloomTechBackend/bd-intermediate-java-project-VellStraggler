@@ -19,6 +19,11 @@ public class PromiseHistory {
     public PromiseHistory(Order order) {
         this.order = order;
     }
+
+    /**
+     * Return the size of the privately stored Promise list.
+     * @return
+     */
     public int size() {
         return promises.size();
     }
@@ -41,6 +46,12 @@ public class PromiseHistory {
         }
         promises.add(newPromise);
     }
+
+    /**
+     * Set a Promise at index i to be a new, given Promise.
+     * @param i
+     * @param newPromise
+     */
     public void setPromise(int i, Promise newPromise) {
         if (null == newPromise) {
             throw new IllegalArgumentException("PromiseHistory cannot accept null Promises");

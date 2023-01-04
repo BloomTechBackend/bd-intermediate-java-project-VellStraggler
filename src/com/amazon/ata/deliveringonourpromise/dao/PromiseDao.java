@@ -5,8 +5,6 @@ import com.amazon.ata.deliveringonourpromise.orderfulfillmentservice.OrderFulfil
 import com.amazon.ata.deliveringonourpromise.ordermanipulationauthority.OrderManipulationAuthorityClient;
 import com.amazon.ata.deliveringonourpromise.types.Promise;
 import com.amazon.ata.deliveringonourpromise.types.PromiseClient;
-import com.amazon.ata.deliverypromiseservice.service.DeliveryPromiseService;
-import com.amazon.ata.orderfulfillmentservice.OrderFulfillmentService;
 import com.amazon.ata.ordermanipulationauthority.OrderResult;
 import com.amazon.ata.ordermanipulationauthority.OrderResultItem;
 import com.amazon.ata.ordermanipulationauthority.OrderShipment;
@@ -17,6 +15,7 @@ import java.util.List;
 
 /**
  * DAO implementation for Promises.
+ * @param <T> Meant to be a string.
  */
 public class PromiseDao<T> implements ReadOnlyDao<String, List<Promise>> {
     private OrderManipulationAuthorityClient omaClient;
@@ -25,7 +24,7 @@ public class PromiseDao<T> implements ReadOnlyDao<String, List<Promise>> {
 
     /**
      * PromiseDao constructor, accepting service clients for DPS, OFS, and OMA.
-     * @param promiseClients, holds dpsClient (AnyServiceClient for DAO to access DPS) and ofsClient
+     * @param promiseClients holds dpsClient (AnyServiceClient for DAO to access DPS) and ofsClient.
      * @param omaClient OrderManipulationAuthorityClient for DAO to access OMA
      */
     public PromiseDao(List<PromiseClient> promiseClients, OrderManipulationAuthorityClient omaClient) {
@@ -48,7 +47,9 @@ public class PromiseDao<T> implements ReadOnlyDao<String, List<Promise>> {
      * @param ofsClient ServiceClient for DAO to access OFS
      * @param omaClient OrderManipulationAuthorityClient for DAO to access OMA
      */
-    public PromiseDao(DeliveryPromiseServiceClient dpsClient, OrderFulfillmentServiceClient ofsClient, OrderManipulationAuthorityClient omaClient) {
+    public PromiseDao(DeliveryPromiseServiceClient dpsClient,
+                      OrderFulfillmentServiceClient ofsClient,
+                      OrderManipulationAuthorityClient omaClient) {
         this.dpsClient = dpsClient;
         this.ofsClient = ofsClient;
         this.omaClient = omaClient;
